@@ -51,11 +51,7 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
       select: false
-    },
-    lecturer_data: {
-      required: false
     }
-
   },
   {
     versionKey: false,
