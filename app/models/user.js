@@ -37,7 +37,8 @@ const UserSchema = new mongoose.Schema(
       default: false
     },
     phone: {
-      type: String
+      type: String,
+      required: false
     },
     group_id: {
       type: String

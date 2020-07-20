@@ -1,23 +1,5 @@
-<<<<<<< HEAD
 {
-  "registration": {
-    "SUBJECT": "Verify your email at myProject",
-    "MESSAGE": "<p>Hello %s.</p> <p>Welcome! To verify your email, please click in this link:</p> <p>%s/verify/%s</p> <p>Thank you.</p>"
-  },
-  "forgotPassword": {
-    "SUBJECT": "Password recovery at myProject",
-    "MESSAGE": "<p>To recover the password for user: %s</p> <p>click the following link:</p> <p>%s/reset/%s</p> <p>If this was a mistake, you can ignore this message.</p> <p>Thank you.</p>"
-  }
+	"registration": {
+		"MESSAGE": "registration.MESSAGE"
+	}
 }
-=======
-{
-  "registration": {
-    "SUBJECT": "Verify your email at myProject",
-    "MESSAGE": "<p>Hello %s.</p> <p>Welcome! To verify your email, please click in this link:</p> <p>%s/verify/%s</p> <p>Thank you.</p>"
-  },
-  "forgotPassword": {
-    "SUBJECT": "Password recovery at myProject",
-    "MESSAGE": "<p>To recover the password for user: %s</p> <p>click the following link:</p> <p>%s/reset/%s</p> <p>If this was a mistake, you can ignore this message.</p> <p>Thank you.</p>"
-  }
-}
->>>>>>> 98fb6c123372c2498fb22d54876701eea58ef962

@@ -20,9 +20,7 @@ const createItem = async (req) => {
       email: req.email,
       password: req.password,
       role: req.role,
-      phone: req.phone,
-      city: req.city,
-      country: req.country,
+      group_id: req.role,
       verification: uuid.v4()
     })
     user.save((err, item) => {
