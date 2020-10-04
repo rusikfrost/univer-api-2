@@ -12,6 +12,10 @@ const UserAccessSchema = new mongoose.Schema(
       lowercase: true,
       required: true
     },
+    user_id: {
+      type: String,
+      required: true
+    },
     ip: {
       type: String,
       required: true
@@ -20,10 +24,14 @@ const UserAccessSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    country: {
+    expired: {
+      type: Boolean,
+      default: false
+    },
+    /*country: {
       type: String,
       required: true
-    }
+    }*/
   },
   {
     versionKey: false,

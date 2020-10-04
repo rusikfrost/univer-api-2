@@ -1,4 +1,8 @@
 const jwt = require('jsonwebtoken')
+const db = require('../middleware/db')
+const modelRole = require('../models/role')
+const modelUser = require('../models/user')
+const modelUserAccess = require('../models/userAccess')
 const User = require('../models/user')
 const UserAccess = require('../models/userAccess')
 const ForgotPassword = require('../models/forgotPassword')
@@ -39,6 +43,15 @@ const generateToken = (user) => {
 }
 
 /**
+ * Creates an object with user rules
+ * @param {Object} req - request object
+ */
+
+const createDefaultRules = async (user_id) => {
+  return await db.createItem({user_id: user_id}, modelRole)
+}
+
+/**
  * Creates an object with user info
  * @param {Object} req - request object
  */
@@ -68,12 +81,13 @@ const setUserInfo = (req) => {
 const saveUserAccessAndReturnToken = async (req, user) => {
   return new Promise((resolve, reject) => {
     const userAccess = new UserAccess({
+      user_id: user._id,
       email: user.email,
       ip: utils.getIP(req),
       browser: utils.getBrowserInfo(req),
-      country: utils.getCountry(req)
+      //country: utils.getCountry(req)
     })
-    userAccess.save((err) => {
+    userAccess.save((err, item) => {
       if (err) {
         reject(utils.buildErrObject(422, err.message))
       }
@@ -81,6 +95,7 @@ const saveUserAccessAndReturnToken = async (req, user) => {
       // Returns data with access token
       resolve({
         token: generateToken(user._id),
+        refresh_token: item._id,
         user: userInfo
       })
     })
@@ -215,6 +230,19 @@ const passwordsDoNotMatch = async (user) => {
   })
 }
 
+const refreshNotFound = async () => {
+  //user.loginAttempts += 1
+  await saveLoginAttemptsToDB(user)
+  return new Promise((resolve, reject) => {
+    if (user.loginAttempts <= LOGIN_ATTEMPTS) {
+      resolve(utils.buildErrObject(409, 'WRONG_PASSWORD'))
+    } else {
+      resolve(blockUser(user))
+    }
+    reject(utils.buildErrObject(422, 'ERROR'))
+  })
+}
+
 /**
  * Registers a new user in database
  * @param {Object} req - request object
@@ -300,7 +328,7 @@ const markResetPasswordAsUsed = async (req, forgot) => {
     forgot.used = true
     forgot.ipChanged = utils.getIP(req)
     forgot.browserChanged = utils.getBrowserInfo(req)
-    forgot.countryChanged = utils.getCountry(req)
+    //forgot.countryChanged = utils.getCountry(req)
     forgot.save((err, item) => {
       utils.itemNotFound(err, item, reject, 'NOT_FOUND')
       resolve(utils.buildSuccObject('PASSWORD_CHANGED'))
@@ -371,7 +399,7 @@ const saveForgotPassword = async (req) => {
       verification: uuid.v4(),
       ipRequest: utils.getIP(req),
       browserRequest: utils.getBrowserInfo(req),
-      countryRequest: utils.getCountry(req)
+      //countryRequest: utils.getCountry(req)
     })
     forgot.save((err, item) => {
       if (err) {
@@ -464,6 +492,26 @@ exports.login = async (req, res) => {
   }
 }
 
+exports.loginByRefresh = async (req, res) => {
+  try {
+    const data = matchedData(req)
+    const session = await db.getItem(data.refresh_token, modelUserAccess)
+    if(session.browser.toString() !== await utils.getBrowserInfo(req).toString()) {
+      await db.updateItem(session._id, modelUserAccess, { $set: {expired: true} })
+      utils.handleError(res, await utils.buildErrObject(401, 'BROWSER_IS_NOT_FOUND'))
+    } else {
+      session.expired ? utils.handleError(res, await utils.buildErrObject(401, 'SESSION_EXPIRED')) : ''
+      let user = await db.getItem(session.user_id, modelUser)
+      await userIsBlocked(user)
+      await db.updateItem(session._id, modelUserAccess, { $set: {expired: true} })
+      const result = await saveUserAccessAndReturnToken(req, user)
+      res.status(200).json({ errors: null, result })
+    }
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
 /**
  * Register function called by route
  * @param {Object} req - request object
@@ -477,6 +525,7 @@ exports.register = async (req, res) => {
     const doesEmailExists = await emailer.emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
+      console.log(await createDefaultRules(item._id));
       const userInfo = setUserInfo(item)
       const response = returnRegisterToken(item, userInfo)
       emailer.sendRegistrationEmailMessage(locale, item)
@@ -581,6 +630,23 @@ exports.roleAuthorization = (roles) => async (req, res, next) => {
       roles
     }
     await checkPermissions(data, next)
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+exports.checkAccess = (mask, section) => async (req, res, next) => {
+  try {
+    let user_id = req.user._id
+    console.log(user_id);
+    let user_mask = await db.getItemByParams({user_id: user_id}, modelRole)
+    user_mask = user_mask[0]
+    console.log(user_mask);
+    console.log( mask , user_mask.news )
+    console.log( mask & user_mask.news )
+    console.log( ((mask & user_mask.news) == mask || (mask & user_mask.news) == user_mask.news) && (mask <= user_mask.news) )
+    
+    //await checkPermissions(data, next)
   } catch (error) {
     utils.handleError(res, error)
   }

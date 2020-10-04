@@ -1,5 +1,6 @@
 {
 	"registration": {
-		"MESSAGE": "registration.MESSAGE"
+		"MESSAGE": "registration.MESSAGE",
+		"SUBJECT": "registration.SUBJECT"
 	}
 }
