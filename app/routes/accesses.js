@@ -1,5 +1,5 @@
-const controller = require('../controllers/news')
-const validate = require('../controllers/news.validate')
+const controller = require('../controllers/accesses')
+const validate = require('../controllers/accesses.validate')
 const AuthController = require('../controllers/auth')
 const express = require('express')
 const router = express.Router()
@@ -11,7 +11,7 @@ const requireAuth = passport.authenticate('jwt', {
 const trimRequest = require('trim-request')
 
 /*
- * news routes
+ * accesses routes
  */
 
 /*
@@ -25,23 +25,9 @@ router.get('/all', controller.getAllItems)
 router.get(
   '/',
   requireAuth,
-  AuthController.checkAccess(1, 'timetable'),
-  //AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
+  //AuthController.checkAccess(4, 'accesses'),
   trimRequest.all,
   controller.getItems
-)
-
-/*
- * Create new item route
- */
-router.post(
-  '/',
-  requireAuth,
-  AuthController.checkAccess(4, 'timetable'),
-  //AuthController.roleAuthorization(['admin']),
-  trimRequest.all,
-  validate.createItem,
-  controller.createItem
 )
 
 /*
@@ -50,8 +36,8 @@ router.post(
 router.get(
   '/:id',
   requireAuth,
-  AuthController.checkAccess(1, 'timetable'),
   //AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
+  //AuthController.checkAccess(1, 'accesses'),
   trimRequest.all,
   validate.getItem,
   controller.getItem
@@ -63,8 +49,8 @@ router.get(
 router.patch(
   '/:id',
   requireAuth,
-  AuthController.checkAccess(2, 'timetable'),
   //AuthController.roleAuthorization(['admin']),
+  AuthController.checkAccess(2, 'accesses'),
   trimRequest.all,
   validate.updateItem,
   controller.updateItem
@@ -76,8 +62,8 @@ router.patch(
 router.delete(
   '/:id',
   requireAuth,
-  AuthController.checkAccess(4, 'timetable'),
   //AuthController.roleAuthorization(['admin']),
+  AuthController.checkAccess(4, 'accesses'),
   trimRequest.all,
   validate.deleteItem,
   controller.deleteItem

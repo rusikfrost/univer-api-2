@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const db = require('../middleware/db')
-const modelRole = require('../models/role')
+const modelRole = require('../models/access')
 const modelUser = require('../models/user')
 const modelUserAccess = require('../models/userAccess')
 const User = require('../models/user')
@@ -635,18 +635,27 @@ exports.roleAuthorization = (roles) => async (req, res, next) => {
   }
 }
 
+const checkFlag = async (id, mask, section) => {
+  try {
+    let user_mask = await db.getItemByParams({user_id: id}, modelRole)
+    return ((mask & user_mask[0][section]) > 0)
+  } catch (error) {
+    console.log(error);
+    return false
+  }
+}
+
 exports.checkAccess = (mask, section) => async (req, res, next) => {
   try {
-    let user_id = req.user._id
-    console.log(user_id);
-    let user_mask = await db.getItemByParams({user_id: user_id}, modelRole)
-    user_mask = user_mask[0]
-    console.log(user_mask);
-    console.log( mask , user_mask.news )
-    console.log( mask & user_mask.news )
-    console.log( ((mask & user_mask.news) == mask || (mask & user_mask.news) == user_mask.news) && (mask <= user_mask.news) )
-    
-    //await checkPermissions(data, next)
+    if (await checkFlag(req.user._id.toString(), mask, section)) {
+      return next()
+    }
+    res.status(403).json({
+      errors: {
+        result: null,
+        msg: 'PERMISSION_DENIED'
+      }
+    })
   } catch (error) {
     utils.handleError(res, error)
   }

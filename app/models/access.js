@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
-const RolesSchema = new mongoose.Schema(
+const AccessSchema = new mongoose.Schema(
   {
     user_id: {
       type: String,
@@ -13,31 +13,31 @@ const RolesSchema = new mongoose.Schema(
       //1 read
       //2 update
       //4 create/delete
-      default: 0
+      default: 1
     },
     users: {
       type: Number,
-      default: 0
+      default: 1
     },
     groups: {
       type: Number,
-      default: 0
+      default: 1
     },
-    portfolio: {
+    lecturers: {
       type: Number,
-      default: 0
+      default: 1
     },
     works: {
       type: Number,
-      default: 0
+      default: 1
     },
     timetable: {
       type: Number,
-      default: 0
+      default: 1
     },
-    roles: {
+    accesses: {
       type: Number,
-      default: 0
+      default: 1
     },
   },
   {
@@ -45,5 +45,5 @@ const RolesSchema = new mongoose.Schema(
     timestamps: true
   }
 )
-RolesSchema.plugin(mongoosePaginate)
-module.exports = mongoose.model('Roles', RolesSchema)
+AccessSchema.plugin(mongoosePaginate)
+module.exports = mongoose.model('Access', AccessSchema)

@@ -1,4 +1,4 @@
-const model = require('../models/news')
+const model = require('../models/access')
 const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
@@ -8,11 +8,11 @@ const db = require('../middleware/db')
  *********************/
 
 /**
- * Checks if a news already exists excluding itself
+ * Checks if a accesses already exists excluding itself
  * @param {string} id - id of item
  * @param {string} name - name of item
  */
-const newsExistsExcludingItself = async (id, name) => {
+const accessesExistsExcludingItself = async (id, name) => {
   return new Promise((resolve, reject) => {
     model.findOne(
       {
@@ -22,7 +22,7 @@ const newsExistsExcludingItself = async (id, name) => {
         }
       },
       (err, item) => {
-        utils.itemAlreadyExists(err, item, reject, 'NEWS_ALREADY_EXISTS')
+        utils.itemAlreadyExists(err, item, reject, 'ROLES_ALREADY_EXISTS')
         resolve(false)
       }
     )
@@ -30,17 +30,17 @@ const newsExistsExcludingItself = async (id, name) => {
 }
 
 /**
- * Checks if a news already exists in database
+ * Checks if a accesses already exists in database
  * @param {string} name - name of item
  */
-const newsExists = async (name) => {
+const accessesExists = async (name) => {
   return new Promise((resolve, reject) => {
     model.findOne(
       {
         name
       },
       (err, item) => {
-        utils.itemAlreadyExists(err, item, reject, 'NEWS_ALREADY_EXISTS')
+        utils.itemAlreadyExists(err, item, reject, 'ROLES_ALREADY_EXISTS')
         resolve(false)
       }
     )
@@ -128,29 +128,12 @@ exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    //const doesNewsExists = await newsExistsExcludingItself(id, req.name)
-    //if (!doesNewsExists) {
-      const result = await db.updateItem(id, model, req)
+    //const doesAccessesExists = await accessesExistsExcludingItself(id, req.name)
+    //if (!doesAccessesExists) {
+      //let user_mask = await db.getItemByParams({user_id: id}, modelAccess)
+      const result = await db.updateItem(id, model, {$set: req})
       res.status(200).json({ errors: null, result })
     //}
-  } catch (error) {
-    utils.handleError(res, error)
-  }
-}
-
-/**
- * Create item function called by route
- * @param {Object} req - request object
- * @param {Object} res - response object
- */
-exports.createItem = async (req, res) => {
-  try {
-    req = matchedData(req)
-    //const doesNewsExists = await newsExists(req.name)
-   // if (!doesNewsExists) {
-      const result = await db.createItem(req, model)
-      res.status(201).json({ errors: null, result })
-   // }
   } catch (error) {
     utils.handleError(res, error)
   }
