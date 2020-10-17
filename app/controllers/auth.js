@@ -48,7 +48,7 @@ const generateToken = (user) => {
  */
 
 const createDefaultRules = async (user_id) => {
-  return await db.createItem({user_id: user_id}, modelRole)
+  return await db.createItem({ user_id }, modelRole)
 }
 
 /**
@@ -84,8 +84,8 @@ const saveUserAccessAndReturnToken = async (req, user) => {
       user_id: user._id,
       email: user.email,
       ip: utils.getIP(req),
-      browser: utils.getBrowserInfo(req),
-      //country: utils.getCountry(req)
+      browser: utils.getBrowserInfo(req)
+      // country: utils.getCountry(req)
     })
     userAccess.save((err, item) => {
       if (err) {
@@ -231,7 +231,7 @@ const passwordsDoNotMatch = async (user) => {
 }
 
 const refreshNotFound = async () => {
-  //user.loginAttempts += 1
+  // user.loginAttempts += 1
   await saveLoginAttemptsToDB(user)
   return new Promise((resolve, reject) => {
     if (user.loginAttempts <= LOGIN_ATTEMPTS) {
@@ -328,7 +328,7 @@ const markResetPasswordAsUsed = async (req, forgot) => {
     forgot.used = true
     forgot.ipChanged = utils.getIP(req)
     forgot.browserChanged = utils.getBrowserInfo(req)
-    //forgot.countryChanged = utils.getCountry(req)
+    // forgot.countryChanged = utils.getCountry(req)
     forgot.save((err, item) => {
       utils.itemNotFound(err, item, reject, 'NOT_FOUND')
       resolve(utils.buildSuccObject('PASSWORD_CHANGED'))
@@ -398,8 +398,8 @@ const saveForgotPassword = async (req) => {
       email: req.body.email,
       verification: uuid.v4(),
       ipRequest: utils.getIP(req),
-      browserRequest: utils.getBrowserInfo(req),
-      //countryRequest: utils.getCountry(req)
+      browserRequest: utils.getBrowserInfo(req)
+      // countryRequest: utils.getCountry(req)
     })
     forgot.save((err, item) => {
       if (err) {
@@ -496,14 +496,29 @@ exports.loginByRefresh = async (req, res) => {
   try {
     const data = matchedData(req)
     const session = await db.getItem(data.refresh_token, modelUserAccess)
-    if(session.browser.toString() !== await utils.getBrowserInfo(req).toString()) {
-      await db.updateItem(session._id, modelUserAccess, { $set: {expired: true} })
-      utils.handleError(res, await utils.buildErrObject(401, 'BROWSER_IS_NOT_FOUND'))
+    if (
+      session.browser.toString() !==
+      (await utils.getBrowserInfo(req).toString())
+    ) {
+      await db.updateItem(session._id, modelUserAccess, {
+        $set: { expired: true }
+      })
+      utils.handleError(
+        res,
+        await utils.buildErrObject(401, 'BROWSER_IS_NOT_FOUND')
+      )
     } else {
-      session.expired ? utils.handleError(res, await utils.buildErrObject(401, 'SESSION_EXPIRED')) : ''
-      let user = await db.getItem(session.user_id, modelUser)
+      session.expired
+        ? utils.handleError(
+            res,
+            await utils.buildErrObject(401, 'SESSION_EXPIRED')
+          )
+        : ''
+      const user = await db.getItem(session.user_id, modelUser)
       await userIsBlocked(user)
-      await db.updateItem(session._id, modelUserAccess, { $set: {expired: true} })
+      await db.updateItem(session._id, modelUserAccess, {
+        $set: { expired: true }
+      })
       const result = await saveUserAccessAndReturnToken(req, user)
       res.status(200).json({ errors: null, result })
     }
@@ -525,7 +540,7 @@ exports.register = async (req, res) => {
     const doesEmailExists = await emailer.emailExists(req.email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
-      console.log(await createDefaultRules(item._id));
+      console.log(await createDefaultRules(item._id))
       const userInfo = setUserInfo(item)
       const response = returnRegisterToken(item, userInfo)
       emailer.sendRegistrationEmailMessage(locale, item)
@@ -637,10 +652,10 @@ exports.roleAuthorization = (roles) => async (req, res, next) => {
 
 const checkFlag = async (id, mask, section) => {
   try {
-    let user_mask = await db.getItemByParams({user_id: id}, modelRole)
-    return ((mask & user_mask[0][section]) > 0)
+    const user_mask = await db.getItemByParams({ user_id: id }, modelRole)
+    return (mask & user_mask[0][section]) > 0
   } catch (error) {
-    console.log(error);
+    console.log(error)
     return false
   }
 }

@@ -25,7 +25,7 @@ router.get('/all', controller.getAllItems)
 router.get(
   '/',
   requireAuth,
-  //AuthController.checkAccess(4, 'accesses'),
+  // AuthController.checkAccess(4, 'accesses'),
   trimRequest.all,
   controller.getItems
 )
@@ -36,8 +36,8 @@ router.get(
 router.get(
   '/:id',
   requireAuth,
-  //AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
-  //AuthController.checkAccess(1, 'accesses'),
+  // AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
+  // AuthController.checkAccess(1, 'accesses'),
   trimRequest.all,
   validate.getItem,
   controller.getItem
@@ -49,7 +49,7 @@ router.get(
 router.patch(
   '/:id',
   requireAuth,
-  //AuthController.roleAuthorization(['admin']),
+  // AuthController.roleAuthorization(['admin']),
   AuthController.checkAccess(2, 'accesses'),
   trimRequest.all,
   validate.updateItem,
@@ -62,7 +62,7 @@ router.patch(
 router.delete(
   '/:id',
   requireAuth,
-  //AuthController.roleAuthorization(['admin']),
+  // AuthController.roleAuthorization(['admin']),
   AuthController.checkAccess(4, 'accesses'),
   trimRequest.all,
   validate.deleteItem,

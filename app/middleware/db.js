@@ -120,7 +120,7 @@ module.exports = {
       model
         .find(params, (err, item) => {
           itemNotFound(err, item, reject, 'NOT_FOUND')
-          //resolve([])
+          // resolve([])
           resolve(item)
         })
         .lean(true)

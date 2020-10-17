@@ -64,6 +64,11 @@ router.get(
  * Login route
  */
 router.post('/login', trimRequest.all, validate.login, controller.login)
-router.post('/refresh', trimRequest.all, validate.refresh, controller.loginByRefresh)
+router.post(
+  '/refresh',
+  trimRequest.all,
+  validate.refresh,
+  controller.loginByRefresh
+)
 
 module.exports = router

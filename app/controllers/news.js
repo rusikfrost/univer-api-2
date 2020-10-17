@@ -128,11 +128,11 @@ exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    //const doesNewsExists = await newsExistsExcludingItself(id, req.name)
-    //if (!doesNewsExists) {
-      const result = await db.updateItem(id, model, req)
-      res.status(200).json({ errors: null, result })
-    //}
+    // const doesNewsExists = await newsExistsExcludingItself(id, req.name)
+    // if (!doesNewsExists) {
+    const result = await db.updateItem(id, model, req)
+    res.status(200).json({ errors: null, result })
+    // }
   } catch (error) {
     utils.handleError(res, error)
   }
@@ -146,11 +146,11 @@ exports.updateItem = async (req, res) => {
 exports.createItem = async (req, res) => {
   try {
     req = matchedData(req)
-    //const doesNewsExists = await newsExists(req.name)
-   // if (!doesNewsExists) {
-      const result = await db.createItem(req, model)
-      res.status(201).json({ errors: null, result })
-   // }
+    // const doesNewsExists = await newsExists(req.name)
+    // if (!doesNewsExists) {
+    const result = await db.createItem(req, model)
+    res.status(201).json({ errors: null, result })
+    // }
   } catch (error) {
     utils.handleError(res, error)
   }

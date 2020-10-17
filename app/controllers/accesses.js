@@ -128,12 +128,12 @@ exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    //const doesAccessesExists = await accessesExistsExcludingItself(id, req.name)
-    //if (!doesAccessesExists) {
-      //let user_mask = await db.getItemByParams({user_id: id}, modelAccess)
-      const result = await db.updateItem(id, model, {$set: req})
-      res.status(200).json({ errors: null, result })
-    //}
+    // const doesAccessesExists = await accessesExistsExcludingItself(id, req.name)
+    // if (!doesAccessesExists) {
+    // let user_mask = await db.getItemByParams({user_id: id}, modelAccess)
+    const result = await db.updateItem(id, model, { $set: req })
+    res.status(200).json({ errors: null, result })
+    // }
   } catch (error) {
     utils.handleError(res, error)
   }

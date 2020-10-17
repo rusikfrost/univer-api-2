@@ -27,8 +27,8 @@ const UserAccessSchema = new mongoose.Schema(
     expired: {
       type: Boolean,
       default: false
-    },
-    /*country: {
+    }
+    /* country: {
       type: String,
       required: true
     }*/

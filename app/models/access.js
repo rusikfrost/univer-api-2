@@ -9,10 +9,10 @@ const AccessSchema = new mongoose.Schema(
     },
     news: {
       type: Number,
-      //0 none
-      //1 read
-      //2 update
-      //4 create/delete
+      // 0 none
+      // 1 read
+      // 2 update
+      // 4 create/delete
       default: 1
     },
     users: {
@@ -38,7 +38,7 @@ const AccessSchema = new mongoose.Schema(
     accesses: {
       type: Number,
       default: 1
-    },
+    }
   },
   {
     versionKey: false,

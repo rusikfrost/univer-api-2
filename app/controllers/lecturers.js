@@ -125,10 +125,10 @@ exports.updateItem = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    //const doesLecturerExists = await lecturerExistsExcludingItself(id, req.name)
-    //if (!doesLecturerExists) {
-      res.status(200).json(await db.updateItem(id, model, req))
-    //}
+    // const doesLecturerExists = await lecturerExistsExcludingItself(id, req.name)
+    // if (!doesLecturerExists) {
+    res.status(200).json(await db.updateItem(id, model, req))
+    // }
   } catch (error) {
     utils.handleError(res, error)
   }
@@ -142,10 +142,10 @@ exports.updateItem = async (req, res) => {
 exports.createItem = async (req, res) => {
   try {
     req = matchedData(req)
-    //const doesLecturerExists = await lecturerExists(req.name)
-    //if (!doesLecturerExists) {
-      res.status(201).json(await db.createItem(req, model))
-    //}
+    // const doesLecturerExists = await lecturerExists(req.name)
+    // if (!doesLecturerExists) {
+    res.status(201).json(await db.createItem(req, model))
+    // }
   } catch (error) {
     utils.handleError(res, error)
   }
