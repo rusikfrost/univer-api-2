@@ -120,6 +120,22 @@ exports.getItem = async (req, res) => {
 }
 
 /**
+ * Get item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.getItemByUserId = async (req, res) => {
+  try {
+    req = matchedData(req)
+    const id = await utils.isIDGood(req.id)
+    const result = await db.getItemByParams({user_id: id}, model)
+    res.status(200).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
  * Update item function called by route
  * @param {Object} req - request object
  * @param {Object} res - response object

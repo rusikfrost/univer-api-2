@@ -3,9 +3,9 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const NewsSchema = new mongoose.Schema(
   {
-    image: {
-      type: String,
-      required: true
+    images: {
+      type: Array,
+      required: false
     },
     title: {
       type: String,
@@ -19,10 +19,10 @@ const NewsSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    date: {
+/*     date: {
       type: Number,
       required: true
-    },
+    }, */
     views: {
       type: Number,
       required: true

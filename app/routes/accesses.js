@@ -44,6 +44,19 @@ router.get(
 )
 
 /*
+ * Get item route
+ */
+router.get(
+  '/user/:id',
+  requireAuth,
+  // AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
+  // AuthController.checkAccess(1, 'accesses'),
+  trimRequest.all,
+  validate.getItem,
+  controller.getItemByUserId
+)
+
+/*
  * Update item route
  */
 router.patch(

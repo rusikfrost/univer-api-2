@@ -42,6 +42,16 @@ router.post(
   validate.createItem,
   controller.createItem
 )
+/* 
+router.post(
+  '/:id',
+  requireAuth,
+  // AuthController.roleAuthorization(['admin']),
+  AuthController.checkAccess(1, 'news'),
+  trimRequest.all,
+  validate.viewCounter,
+  controller.viewCounter
+) */
 
 /*
  * Get item route

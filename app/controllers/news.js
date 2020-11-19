@@ -8,46 +8,6 @@ const db = require('../middleware/db')
  *********************/
 
 /**
- * Checks if a news already exists excluding itself
- * @param {string} id - id of item
- * @param {string} name - name of item
- */
-const newsExistsExcludingItself = async (id, name) => {
-  return new Promise((resolve, reject) => {
-    model.findOne(
-      {
-        name,
-        _id: {
-          $ne: id
-        }
-      },
-      (err, item) => {
-        utils.itemAlreadyExists(err, item, reject, 'NEWS_ALREADY_EXISTS')
-        resolve(false)
-      }
-    )
-  })
-}
-
-/**
- * Checks if a news already exists in database
- * @param {string} name - name of item
- */
-const newsExists = async (name) => {
-  return new Promise((resolve, reject) => {
-    model.findOne(
-      {
-        name
-      },
-      (err, item) => {
-        utils.itemAlreadyExists(err, item, reject, 'NEWS_ALREADY_EXISTS')
-        resolve(false)
-      }
-    )
-  })
-}
-
-/**
  * Gets all items from database
  */
 const getAllItemsFromDB = async () => {
@@ -126,13 +86,20 @@ exports.getItem = async (req, res) => {
  */
 exports.updateItem = async (req, res) => {
   try {
+    let files = [];
+    req.files.forEach(element => {
+     files.push({
+       filename: element.filename,
+       path: element.path,
+       size: element.size
+     })
+     console.log(element);
+   }); 
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    // const doesNewsExists = await newsExistsExcludingItself(id, req.name)
-    // if (!doesNewsExists) {
+    req.files = files
     const result = await db.updateItem(id, model, req)
     res.status(200).json({ errors: null, result })
-    // }
   } catch (error) {
     utils.handleError(res, error)
   }
@@ -145,12 +112,24 @@ exports.updateItem = async (req, res) => {
  */
 exports.createItem = async (req, res) => {
   try {
+    console.log(req.body);
+    console.log(req.files);
+    console.log(req.file);
+    console.log('this ---------------- ');
+    let files = [];
+    req.files.forEach(element => {
+      files.push({
+        filename: element.filename,
+        path: element.path,
+        size: element.size
+      })
+      console.log(element);
+    });
     req = matchedData(req)
-    // const doesNewsExists = await newsExists(req.name)
-    // if (!doesNewsExists) {
+    req.views = 0;
+    req.images = files
     const result = await db.createItem(req, model)
     res.status(201).json({ errors: null, result })
-    // }
   } catch (error) {
     utils.handleError(res, error)
   }

@@ -16,7 +16,7 @@ const path = require('path')
 // const multer = require('multer');
 
 // ////////////////////////////////////////////////////////////
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
   // Надо еще добавить проверку на является ли файл docx.
   destination(req, file, cb) {
     // console.log('req::: ', req.params);
@@ -33,7 +33,23 @@ app.post('/upload/:type/:id', upload.any(), (req, res) => {
   console.log('req = ', req.files)
   console.log('req = ', req.params)
   res.send(req.files)
-})
+}) */
+
+
+
+let storageConfig = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+app.use(express.static(__dirname));
+app.use(multer({ storage: storageConfig }).any());
+
+
+
 // ////////////////////////////////////////////////////////////
 
 // Setup express server port from ENV, default: 3000
