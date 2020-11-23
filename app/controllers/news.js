@@ -86,15 +86,15 @@ exports.getItem = async (req, res) => {
  */
 exports.updateItem = async (req, res) => {
   try {
-    let files = [];
-    req.files.forEach(element => {
-     files.push({
-       filename: element.filename,
-       path: element.path,
-       size: element.size
-     })
-     console.log(element);
-   }); 
+    const files = []
+    req.files.forEach((element) => {
+      files.push({
+        filename: element.filename,
+        path: element.path,
+        size: element.size
+      })
+      console.log(element)
+    })
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
     req.files = files
@@ -112,21 +112,21 @@ exports.updateItem = async (req, res) => {
  */
 exports.createItem = async (req, res) => {
   try {
-    console.log(req.body);
-    console.log(req.files);
-    console.log(req.file);
-    console.log('this ---------------- ');
-    let files = [];
-    req.files.forEach(element => {
+    console.log(req.body)
+    console.log(req.files)
+    console.log(req.file)
+    console.log('this ---------------- ')
+    const files = []
+    req.files.forEach((element) => {
       files.push({
         filename: element.filename,
         path: element.path,
         size: element.size
       })
-      console.log(element);
-    });
+      console.log(element)
+    })
     req = matchedData(req)
-    req.views = 0;
+    req.views = 0
     req.images = files
     const result = await db.createItem(req, model)
     res.status(201).json({ errors: null, result })

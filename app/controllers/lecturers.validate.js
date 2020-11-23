@@ -27,7 +27,7 @@ exports.createItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(),
- /*  check('position')
+  /*  check('position')
     .exists()
     .withMessage('MISSING')
     .not()
@@ -83,7 +83,7 @@ exports.createItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(),
-/*   check('disciplines')
+  /*   check('disciplines')
     .exists()
     .withMessage('MISSING')
     .not()
@@ -97,12 +97,11 @@ exports.createItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(), */
-  
+
   (req, res, next) => {
     validationResult(req, res, next)
   }
 ]
-
 
 exports.updateItem = [
   check('id')
@@ -203,14 +202,11 @@ exports.updateItem = [
     .isEmpty()
     .withMessage('IS_EMPTY')
     .trim(), */
-  
+
   (req, res, next) => {
     validationResult(req, res, next)
   }
 ]
-
-
-
 
 /*
 exports.createItem = [

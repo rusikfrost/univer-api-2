@@ -128,7 +128,7 @@ exports.getItemByUserId = async (req, res) => {
   try {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
-    const result = await db.getItemByParams({user_id: id}, model)
+    const result = await db.getItemByParams({ user_id: id }, model)
     res.status(200).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)

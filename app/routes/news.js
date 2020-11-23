@@ -24,7 +24,7 @@ router.get('/all', controller.getAllItems)
  */
 router.get(
   '/',
-  requireAuth,
+  //requireAuth,
   // AuthController.checkAccess(4, 'news'),
   trimRequest.all,
   controller.getItems
@@ -42,7 +42,7 @@ router.post(
   validate.createItem,
   controller.createItem
 )
-/* 
+/*
 router.post(
   '/:id',
   requireAuth,
@@ -58,7 +58,7 @@ router.post(
  */
 router.get(
   '/:id',
-  requireAuth,
+  //requireAuth,
   // AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
   // AuthController.checkAccess(1, 'news'),
   trimRequest.all,

@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const LecturerScheme = new mongoose.Schema(
-  
-  
   {
     uid: {
       type: String,
@@ -58,9 +56,8 @@ const LecturerScheme = new mongoose.Schema(
       required: false
     } // Научные интересы
   },
-  
-  
-  /*{
+
+  /* {
     full_name: {
       type: String,
       required: true

@@ -35,20 +35,16 @@ app.post('/upload/:type/:id', upload.any(), (req, res) => {
   res.send(req.files)
 }) */
 
-
-
-let storageConfig = multer.diskStorage({
+const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads");
+    cb(null, 'uploads')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, file.originalname)
   }
-});
-app.use(express.static(__dirname));
-app.use(multer({ storage: storageConfig }).any());
-
-
+})
+app.use(express.static(__dirname))
+app.use(multer({ storage: storageConfig }).any())
 
 // ////////////////////////////////////////////////////////////
 
