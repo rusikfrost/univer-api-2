@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d210b7e"],{b8a3:function(n,e,o){"use strict";o.r(e);var t=function(){var n=this,e=n.$createElement,o=n._self._c||e;return o("span",[n._v("Join commision")])},i=[],s={name:"join-commission",beforeMount:function(){this.$router.push("/")}},u=s,c=o("2877"),r=Object(c["a"])(u,t,i,!1,null,null,null);e["default"]=r.exports}}]);
+//# sourceMappingURL=chunk-2d210b7e.3a21b3bd.js.map
