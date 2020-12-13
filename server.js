@@ -40,9 +40,10 @@ const storageConfig = multer.diskStorage({
     cb(null, 'uploads')
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname)
+    cb(null, `${new Date()/1}_${file.originalname}`)
   }
 })
+
 app.use(express.static(__dirname))
 app.use(multer({ storage: storageConfig }).any())
 

@@ -10,12 +10,13 @@ const requireAuth = passport.authenticate('jwt', {
 })
 const trimRequest = require('trim-request')
 const multer = require('multer')
-/*
- * news routes
- */
 
-/*
- * Get all items route
- */
-
+router.post(
+  '/',
+  requireAuth,
+  AuthController.checkAccess(4, 'news'),
+  trimRequest.all,
+  //validate.createItem,
+  controller.createItem
+)
 module.exports = router

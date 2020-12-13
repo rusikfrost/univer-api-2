@@ -119,8 +119,8 @@ exports.createItem = async (req, res) => {
     const files = []
     req.files.forEach((element) => {
       files.push({
-        filename: element.filename,
-        path: element.path,
+        filename: `${element.filename}`,
+        path: `${element.path}`,
         size: element.size
       })
       console.log(element)
