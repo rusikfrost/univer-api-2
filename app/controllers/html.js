@@ -122,8 +122,9 @@ exports.getItem = async(req, res) => {
  */
 exports.updateItem = async(req, res) => {
     try {
-        req = req.body
-        const id = await utils.isIDGood(req.id)
+
+        const id = req.params.id//await utils.isIDGood(req.id)
+	req = req.body
         const result = await db.updateItem(id, model, req)
         res.status(200).json({ errors: null, result })
     } catch (error) {
