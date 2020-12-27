@@ -5,7 +5,6 @@ const { check } = require('express-validator')
  * Validates create new item request
  */
 
-date
 exports.createItem = [
   check('couple')
     .exists()
