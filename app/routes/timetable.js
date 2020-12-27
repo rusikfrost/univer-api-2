@@ -31,6 +31,15 @@ router.get(
     controller.getItems
 )
 
+router.get(
+    '/last',
+    //requireAuth,
+    //AuthController.checkAccess(1, 'timetable'),
+    // AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
+    trimRequest.all,
+    controller.getLastUpload
+)
+
 /*
  * Create new item route
  */

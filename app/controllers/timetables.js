@@ -98,6 +98,15 @@ exports.getItems = async(req, res) => {
         utils.handleError(res, error)
     }
 }
+exports.getLastUpload = async(req, res) => {
+    try {
+
+        const result = await db.getItemByParams({ LOAD_ID: "1" }, model)
+        res.status(200).json({ errors: null, result })
+    } catch (error) {
+        utils.handleError(res, error)
+    }
+}
 
 /**
  * Get item function called by route
@@ -162,13 +171,15 @@ exports.createItem = async(req, res) => {
  */
 exports.createItemFromDBF = async(req, res) => {
     try {
+        db.clearCollection(model)
         console.log(req.files)
         const dbf = dbfstream(`./${req.files[0].path}`, 'cp866');
         let a = []
         dbf.on('header', header => {}).on('data', (data) => {});
         dbf.on('data', (data) => {
             console.log(data);
-            //db.createItem(data, model).catch(err => console.log(err))
+            data.LOAD_ID = data['@numOfRecord']
+            db.createItem(data, model).catch(err => console.log(err))
         });
         dbf.on('error', (err) => {
             console.log(err);

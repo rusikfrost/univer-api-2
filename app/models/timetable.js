@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const TimetableSchema = new mongoose.Schema({
+    LOAD_ID: {
+        type: String,
+        required: true,
+    },
     GROUP: {
         type: String,
         required: true,
