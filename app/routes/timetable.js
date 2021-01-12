@@ -24,8 +24,8 @@ router.get('/all', controller.getAllItems)
  */
 router.get(
     '/',
-    requireAuth,
-    AuthController.checkAccess(1, 'timetable'),
+    //requireAuth,
+    //AuthController.checkAccess(1, 'timetable'),
     // AuthController.roleAuthorization(['student', 'lecturer', 'admin']),
     trimRequest.all,
     controller.getItems
