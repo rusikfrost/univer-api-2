@@ -1,3 +1,4 @@
+
 const model = require('../models/news')
 const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
@@ -86,18 +87,34 @@ exports.getItem = async (req, res) => {
  */
 exports.updateItem = async (req, res) => {
   try {
-    const files = []
-    req.files.forEach((element) => {
-      files.push({
+console.log('aaaaaaaaaaa')
+console.log(req.body)
+console.log(req.params)
+const files = []
+
+
+console.log(req.body.images)
+if(!!req.body.images && req.body.images.length>0){  
+  req.body.images.forEach((element) => {
+      
+//	console.log(element)
+files.push({
         filename: element.filename,
         path: element.path,
         size: element.size
       })
-      console.log(element)
-    })
-    req = matchedData(req)
-    const id = await utils.isIDGood(req.id)
-    req.files = files
+     // console.log(element)
+   })
+}
+//    req = matchedData(req)req = req.body  
+
+  const id =  req.params.id//= await utils.isIDGood(req.id)
+//    req.files = files
+    
+req = req.body
+req.images = files
+console.log(id)
+console.log(req)
     const result = await db.updateItem(id, model, req)
     res.status(200).json({ errors: null, result })
   } catch (error) {
