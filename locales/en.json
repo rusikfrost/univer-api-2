@@ -2,5 +2,9 @@
 	"registration": {
 		"MESSAGE": "registration.MESSAGE",
 		"SUBJECT": "registration.SUBJECT"
+	},
+	"forgotPassword": {
+		"SUBJECT": "forgotPassword.SUBJECT",
+		"MESSAGE": "forgotPassword.MESSAGE"
 	}
 }

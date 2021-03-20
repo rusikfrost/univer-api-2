@@ -154,7 +154,7 @@ exports.createItem = async(req, res) => {
  */
 exports.deleteItem = async(req, res) => {
     try {
-        req = matchedData(req)
+        //req = matchedData(req)
         const id = req.params.id
         const result = await db.deleteItem(id, model)
         res.status(200).json({ errors: null, result })

@@ -71,11 +71,11 @@ router.get(
  */
 router.patch(
   '/:id',
-  requireAuth,
+  //requireAuth,
   // AuthController.roleAuthorization(['admin']),
-  AuthController.checkAccess(2, 'news'),
+ // AuthController.checkAccess(4, 'news'),
   trimRequest.all,
-  validate.updateItem,
+  //validate.updateItem,
   controller.updateItem
 )
 

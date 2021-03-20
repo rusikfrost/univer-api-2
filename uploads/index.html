@@ -1,0 +1,135 @@
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="isPost=!isPost">Сменить на {{isPost? 'patch' : 'post'}}</button>
+        <div class="container" style="display: flex; justify-content: space-between;">
+            <div v-if="isPost" class="post" style="display: flex; flex-direction: column;">
+                <h5> Создание роутов </h5>
+                <b>route</b>
+                <input v-model="route">
+                <b>data</b>
+                <textarea v-model="data" cols="70" rows="10"></textarea>
+                <button @click="postRoute()"> Отправить </button>
+
+                <h5> Удаление роутов </h5>
+                <div style="display: flex; flex-direction: column;">
+                    <b>id</b>
+                    <input v-model="idForDelete">
+                    <button @click="deleteRoute()"> Удалить </button>
+                </div>
+            </div>
+
+            <div v-else class="patch" style="display: flex; flex-direction: column;">
+                <h5> Изменение роутов </h5>
+                <b>id</b>
+                <input v-model="id">
+                <b>route</b>
+                <input v-model="route">
+                <b>data</b>
+                <textarea v-model="data" cols="70" rows="10"></textarea>
+                <button @click="patchRoute()"> Отправить </button>
+
+
+
+            </div>
+
+      
+            <div style="width:40vw; height: 100vh;">
+                <pre>{{ JSON.stringify(routes, null, '\t') }}</pre>
+            </div>
+
+        </div>
+       
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                idForDelete: '',
+                route: '',
+                data: '',
+                isPost: true,
+                routes: {},
+            },
+            methods: {
+                postRoute() {
+                    axios
+                        .post(`http://188.93.210.205:3000/render`, {
+                            route: this.route,
+                            data: this.data,
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                            alert('успех')
+                            location.reload();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            alert(error)
+                        });
+                },
+                patchRoute() {
+                    axios
+                        .patch(`http://188.93.210.205:3000/render/${this.id}`, {
+                            route: this.route,
+                            data: this.data,
+                        })
+                        .then(function (response) {
+                            console.log(response);
+                            alert('успех')
+                            location.reload();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            alert(error)
+                        });
+                },
+                getRoutes() {
+
+                    axios
+                        .get(`http://188.93.210.205:3000/render/all`)
+                        .then(function (response) {
+                            console.log(response.data);
+                            app.routes = response.data.result;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            alert(error)
+                        });
+                },
+                deleteRoute() {
+
+                    axios
+                        .delete(`http://188.93.210.205:3000/render/${this.idForDelete}`)
+                        .then(function (response) {
+                            console.log(response.data);
+                            alert('успех')
+                            location.reload();
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            alert(error)
+                        });
+                },
+            },
+            beforeMount() {
+                this.getRoutes()
+            }
+
+
+        })
+
+    </script>
+
+</body>
+
+</html>
