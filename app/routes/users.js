@@ -56,6 +56,19 @@ router.get(
  * Update item route
  */
 router.patch(
+  '/:id/group',
+  requireAuth,
+  AuthController.checkAccess(1, 'users'),
+  // AuthController.roleAuthorization(['admin']),
+  trimRequest.all,
+  validate.updateItemGroup,
+  controller.updateItemGroup
+)
+
+/*
+ * Update item route
+ */
+router.patch(
   '/:id',
   requireAuth,
   AuthController.checkAccess(2, 'users'),

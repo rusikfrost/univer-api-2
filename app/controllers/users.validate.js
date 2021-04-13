@@ -76,6 +76,26 @@ exports.updateItem = [
     validationResult(req, res, next)
   }
 ]
+/**
+ * Validates update item request
+ */
+exports.updateItemGroup = [
+  check('id')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  check('group')
+    .exists()
+    .withMessage('MISSING')
+    .not()
+    .isEmpty()
+    .withMessage('IS_EMPTY'),
+  (req, res, next) => {
+    validationResult(req, res, next)
+  }
+]
 
 /**
  * Validates get item request

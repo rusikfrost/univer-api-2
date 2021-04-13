@@ -37,7 +37,7 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  AuthController.checkAccess(4, 'groups'),
+  AuthController.checkAccess(1, 'groups'),
   // AuthController.roleAuthorization(['admin']),
   trimRequest.all,
   validate.createItem,

@@ -100,6 +100,24 @@ exports.updateItem = async (req, res) => {
 }
 
 /**
+ * Update item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.updateItemGroup = async (req, res) => {
+  try {
+    const id = req.params.iid
+    req = req.body
+    const item = await db.getItem(id, model)
+    item.group = req.group;
+    const result = await db.updateItem(id, model, item)
+    res.status(200).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
  * Create item function called by route
  * @param {Object} req - request object
  * @param {Object} res - response object
