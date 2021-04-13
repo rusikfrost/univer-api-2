@@ -86,7 +86,7 @@ exports.updateItemGroup = [
     .not()
     .isEmpty()
     .withMessage('IS_EMPTY'),
-  check('group')
+  check('group_id')
     .exists()
     .withMessage('MISSING')
     .not()

@@ -106,10 +106,10 @@ exports.updateItem = async (req, res) => {
  */
 exports.updateItemGroup = async (req, res) => {
   try {
-    const id = req.params.iid
+    const id = req.params.id
     req = req.body
     const item = await db.getItem(id, model)
-    item.group = req.group;
+    item.group_id = req.group_id;
     const result = await db.updateItem(id, model, item)
     res.status(200).json({ errors: null, result })
   } catch (error) {
