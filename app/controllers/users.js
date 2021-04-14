@@ -66,6 +66,20 @@ exports.getItems = async (req, res) => {
  * @param {Object} req - request object
  * @param {Object} res - response object
  */
+exports.getItemByRole = async (req, res) => {
+  try {
+    const role = req.params.role
+    const result = await db.getItemByParams({ role: role }, model)
+    res.status(200).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+/**
+ * Get item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
 exports.getItem = async (req, res) => {
   try {
     req = matchedData(req)
