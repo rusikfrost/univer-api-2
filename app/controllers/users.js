@@ -132,6 +132,42 @@ exports.updateItemGroup = async (req, res) => {
 }
 
 /**
+ * Update item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.updateItemRole = async (req, res) => {
+  try {
+    const id = req.params.id
+    req = req.body
+    const item = await db.getItem(id, model)
+    item.role = req.role;
+    const result = await db.updateItem(id, model, item)
+    res.status(200).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
+ * Update item function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.updateItemPhone = async (req, res) => {
+  try {
+    const id = req.params.id
+    req = req.body
+    const item = await db.getItem(id, model)
+    item.phone = req.phone;
+    const result = await db.updateItem(id, model, item)
+    res.status(200).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
  * Create item function called by route
  * @param {Object} req - request object
  * @param {Object} res - response object

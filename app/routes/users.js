@@ -76,6 +76,30 @@ router.patch(
   validate.updateItemGroup,
   controller.updateItemGroup
 )
+/*
+ * Update item route
+ */
+router.patch(
+  '/:id/role',
+  requireAuth,
+  AuthController.checkAccess(1, 'users'),
+  // AuthController.roleAuthorization(['admin']),
+  trimRequest.all,
+  validate.updateItemRole,
+  controller.updateItemRole
+)
+/*
+ * Update item route
+ */
+router.patch(
+  '/:id/phone',
+  requireAuth,
+  AuthController.checkAccess(1, 'users'),
+  // AuthController.roleAuthorization(['admin']),
+  trimRequest.all,
+  validate.updateItemPhone,
+  controller.updateItemPhone
+)
 
 /*
  * Update item route
