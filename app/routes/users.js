@@ -76,6 +76,31 @@ router.patch(
   validate.updateItemGroup,
   controller.updateItemGroup
 )
+
+/*
+ * Update item route
+ */
+router.patch(
+  '/:id/notification/on',
+  requireAuth,
+  AuthController.checkAccess(1, 'users'),
+  // AuthController.roleAuthorization(['admin']),
+  trimRequest.all,
+  controller.addNotificationToken
+)
+
+/*
+ * Update item route
+ */
+router.patch(
+  '/:id/notification/off',
+  requireAuth,
+  AuthController.checkAccess(1, 'users'),
+  // AuthController.roleAuthorization(['admin']),
+  trimRequest.all,
+  controller.deleteNotificationToken
+)
+
 /*
  * Update item route
  */

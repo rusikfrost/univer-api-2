@@ -207,6 +207,21 @@ exports.addNotificationToken = async (req, res) => {
 }
 
 /**
+ * Create token function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.deleteNotificationToken = async (req, res) => {
+  try {
+    req = req.body;
+    const result = await db.updateItem(req.id, model, { $set: { notificationToken: null } })
+    res.status(201).json({ errors: null, result })
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
  * Delete item function called by route
  * @param {Object} req - request object
  * @param {Object} res - response object
