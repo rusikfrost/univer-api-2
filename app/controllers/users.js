@@ -21,6 +21,7 @@ const createItem = async (req) => {
       password: req.password,
       role: req.role,
       group_id: req.role,
+      notificationToken: null,
       verification: uuid.v4()
     })
     user.save((err, item) => {
@@ -185,6 +186,21 @@ exports.createItem = async (req, res) => {
 
       res.status(201).json({ errors: null, result })
     }
+  } catch (error) {
+    utils.handleError(res, error)
+  }
+}
+
+/**
+ * Create token function called by route
+ * @param {Object} req - request object
+ * @param {Object} res - response object
+ */
+exports.addNotificationToken = async (req, res) => {
+  try {
+    req = req.body;
+    const result = await db.updateItem(req.id, model, { $set: { notificationToken: req.token } })
+    res.status(201).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
   }

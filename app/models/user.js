@@ -43,6 +43,9 @@ const UserSchema = new mongoose.Schema(
     group_id: {
       type: String
     },
+    notificationToken: {
+      type: String
+    },
     loginAttempts: {
       type: Number,
       default: 0,
