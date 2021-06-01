@@ -16,3 +16,7 @@ npm run test
 ```
 npm run lint
 ```
+#### запуск форматирования prettier
+```
+npm run format
+```
