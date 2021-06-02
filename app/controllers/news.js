@@ -2,6 +2,7 @@ const model = require('../models/news')
 const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
+const firebase = require('../middleware/firebase')
 
 /*********************
  * Private functions *
@@ -129,6 +130,8 @@ exports.createItem = async (req, res) => {
     req.views = 0
     req.images = files
     const result = await db.createItem(req, model)
+    firebase.sendMessage('Новая запись', req.title, '')
+
     res.status(201).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
