@@ -30,25 +30,11 @@ router.get(
   controller.getItems
 )
 
-/*
- * Create new item route
- */
-/*
-router.post(
-  '/',
-  requireAuth,
-  AuthController.roleAuthorization(['admin']),
-  trimRequest.all,
-  validate.createItem,
-  controller.createItem
-)
-*/
 router.post(
   '/forGroup/:group_id',
   requireAuth,
   AuthController.roleAuthorization(['admin']),
   trimRequest.all,
-  // validate.createItemForGroup,
   controller.createItemForGroup
 )
 
