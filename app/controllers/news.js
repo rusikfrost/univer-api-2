@@ -1,4 +1,5 @@
 const model = require('../models/news')
+const userModel = require('../models/user')
 const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
@@ -130,7 +131,11 @@ exports.createItem = async (req, res) => {
     req.views = 0
     req.images = files
     const result = await db.createItem(req, model)
-    firebase.sendMessage('Новая запись', req.title, '')
+
+    const usersForMessaging = await db.getItemByParams({ notificationToken: { $ne: null } }, userModel)
+    usersForMessaging.forEach((user) => {
+      firebase.sendMessage('Новая запись', req.title, user.notificationToken)
+    })
 
     res.status(201).json({ errors: null, result })
   } catch (error) {

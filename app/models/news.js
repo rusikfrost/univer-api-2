@@ -26,7 +26,7 @@ const NewsSchema = new mongoose.Schema(
     views: {
       type: Number,
       required: true
-    }
+    },
   },
   {
     versionKey: false,
