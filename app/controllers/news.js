@@ -44,6 +44,11 @@ const getAllItemsFromDB = async () => {
 exports.getAllItems = async (req, res) => {
   try {
     const result = await getAllItemsFromDB()
+    for (ad of result) {
+      console.log(ad.date.toString().length);
+      if (ad.date.toString().length !== 13) ad.date = `${ad.date}000`
+      console.log(ad.date);
+    }
     res.status(200).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
@@ -59,6 +64,11 @@ exports.getItems = async (req, res) => {
   try {
     const query = await db.checkQueryString(req.query)
     const result = await db.getItems(req, model, query)
+    for (ad of result.docs) {
+      console.log(ad.date.toString().length);
+      if (ad.date.toString().length !== 13) ad.date = `${ad.date}000`
+      console.log(ad.date);
+    }
     res.status(200).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
@@ -75,6 +85,7 @@ exports.getItem = async (req, res) => {
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
     const result = await db.getItem(id, model)
+    if(!!result.date && result.date.toString().length !== 13) result.date = `${result.date}000`
     res.status(200).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
