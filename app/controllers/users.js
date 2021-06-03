@@ -198,8 +198,9 @@ exports.createItem = async (req, res) => {
  */
 exports.addNotificationToken = async (req, res) => {
   try {
+    const id = req.params.id
     req = req.body;
-    const result = await db.updateItem(req.id, model, { $set: { notificationToken: req.token } })
+    const result = await db.updateItem(id, model, { $set: { notificationToken: req.token } })
     res.status(201).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)
@@ -213,8 +214,9 @@ exports.addNotificationToken = async (req, res) => {
  */
 exports.deleteNotificationToken = async (req, res) => {
   try {
+    const id = req.params.id
     req = req.body;
-    const result = await db.updateItem(req.id, model, { $set: { notificationToken: null } })
+    const result = await db.updateItem(id, model, { $set: { notificationToken: null } })
     res.status(201).json({ errors: null, result })
   } catch (error) {
     utils.handleError(res, error)

@@ -81,7 +81,7 @@ router.patch(
  * Update item route
  */
 router.patch(
-  '/:id/notification/on',
+  '/:id/notifications/on',
   requireAuth,
   AuthController.checkAccess(1, 'users'),
   // AuthController.roleAuthorization(['admin']),
@@ -93,7 +93,7 @@ router.patch(
  * Update item route
  */
 router.patch(
-  '/:id/notification/off',
+  '/:id/notifications/off',
   requireAuth,
   AuthController.checkAccess(1, 'users'),
   // AuthController.roleAuthorization(['admin']),
