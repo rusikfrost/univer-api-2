@@ -116,7 +116,6 @@ exports.getLastUpload = async (req, res) => {
 
 exports.getItemByUser = async (req, res) => {
   try {
-    console.log(req.params)
     const user = await db.getItem(req.params.id, usersModel)
     const group = await db.getItem(user.group_id, groupsModel)
     const result = await db.getItemByParams({ GROUP: group.name }, model)
@@ -190,12 +189,11 @@ exports.createItem = async (req, res) => {
 exports.createItemFromDBF = async (req, res) => {
   try {
     db.clearCollection(model)
-    console.log(req.files)
     const dbf = dbfstream(`./${req.files[0].path}`, 'cp866')
     let a = []
     dbf.on('header', (header) => {}).on('data', (data) => {})
     dbf.on('data', (data) => {
-      console.log(data)
+
       data.LOAD_ID = data['@numOfRecord']
       db.createItem(data, model).catch((err) => console.log(err))
     })
@@ -230,22 +228,3 @@ exports.deleteItem = async (req, res) => {
   }
 }
 
-//console.log(data);
-//db.createItem(data, model)
-/*             let day = {
-                GROUP: data.GROUP,
-                DAY: data.DAY,
-                LES: data.LES,
-                AUD: data.AUD,
-                WEEK: data.WEEK,
-                SUBG: data.SUBG,
-                POST: data.POST,
-                NAME: data.NAME,
-                SUBJECT: data.SUBJECT,
-                SUBJ_TYPE: data.SUBJ_TYPE,
-                DATE: data.DATE,
-                CAFEDRA: data.CAFEDRA,
-                THEME: data.THEME,
-            }
-            db.createItem(day, model)
-            console.log(day); */

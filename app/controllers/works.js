@@ -150,7 +150,6 @@ exports.sendWork = async (req, res) => {
   try {
     const id = req.params.id
     req = await getReq(req)
-    console.log(req)
 
     const work = {
       // work_name: req.work_name,
@@ -178,7 +177,6 @@ exports.sendGrade = async (req, res) => {
   try {
     const id = req.params.id
     req = await getReq(req)
-    console.log(req)
 
     const work = {
       // work_name: req.work_name,
@@ -206,7 +204,6 @@ exports.sendRewiew = async (req, res) => {
   try {
     const id = req.params.id
     req = await getReq(req)
-    console.log(req)
 
     const work = {
       // work_name: req.work_name,
@@ -250,7 +247,6 @@ exports.createItemForGroup = async (req, res) => {
   try {
     const id = req.params.group_id
     req = await getReq(req)
-    console.log(req)
 
     const users = await db.getItemByParams({ group_id: id }, userModel)
     const results = []
@@ -270,7 +266,7 @@ exports.createItemForGroup = async (req, res) => {
         // review_path: '',
         review_date: 0
       }
-      console.log(work)
+
       results.push(await db.createItem(work, model))
     }
 

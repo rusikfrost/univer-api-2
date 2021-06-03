@@ -45,9 +45,7 @@ exports.getAllItems = async (req, res) => {
   try {
     const result = await getAllItemsFromDB()
     for (ad of result) {
-      console.log(ad.date.toString().length);
       if (ad.date.toString().length !== 13) ad.date = `${ad.date}000`
-      console.log(ad.date);
     }
     res.status(200).json({ errors: null, result })
   } catch (error) {
@@ -65,9 +63,7 @@ exports.getItems = async (req, res) => {
     const query = await db.checkQueryString(req.query)
     const result = await db.getItems(req, model, query)
     for (ad of result.docs) {
-      console.log(ad.date.toString().length);
       if (ad.date.toString().length !== 13) ad.date = `${ad.date}000`
-      console.log(ad.date);
     }
     res.status(200).json({ errors: null, result })
   } catch (error) {
@@ -106,7 +102,6 @@ exports.updateItem = async (req, res) => {
         path: element.path,
         size: element.size
       })
-      console.log(element)
     })
     req = matchedData(req)
     const id = await utils.isIDGood(req.id)
@@ -125,10 +120,6 @@ exports.updateItem = async (req, res) => {
  */
 exports.createItem = async (req, res) => {
   try {
-    console.log(req.body)
-    console.log(req.files)
-    console.log(req.file)
-    console.log('this ---------------- ')
     const files = []
     req.files.forEach((element) => {
       files.push({
@@ -136,7 +127,6 @@ exports.createItem = async (req, res) => {
         path: `${element.path}`,
         size: element.size
       })
-      console.log(element)
     })
     req = matchedData(req)
     req.views = 0
