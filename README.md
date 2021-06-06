@@ -21,7 +21,7 @@ npm run lint
 npm run format
 ```
 #### Для добавленния конфигураций трбуется создать .env файл.
-#### Поля необходимые в .env файле:
+##### Поля необходимые в .env файле:
 ```
 PORT
 JWT_SECRET
@@ -29,12 +29,12 @@ JWT_EXPIRATION_IN_MINUTES
 MONGO_URI
 EMAIL_FROM_NAME
 EMAIL_FROM_ADDRESS
-EMAIL_SMTP_DOMAIN_MAILGUN
-EMAIL_SMTP_API_MAILGUN
+- EMAIL_SMTP_DOMAIN_MAILGUN
+- EMAIL_SMTP_API_MAILGUN
 FRONTEND_URL
-USE_REDIS
-REDIS_HOST
-REDIS_PORT
+- USE_REDIS
+- REDIS_HOST
+- REDIS_PORT
 SERVER_KEY
 ```
 #### Для добавления уведомлений нужно записать server-key от firebase в .env файл
