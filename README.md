@@ -20,3 +20,4 @@ npm run lint
 ```
 npm run format
 ```
+#### Для добавления уведомлений нужно записать server-key от firebase в .env файл
