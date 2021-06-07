@@ -204,6 +204,10 @@ exports.createItemFromDBF = async (req, res) => {
       console.log('stream end')
       //console.log(dbf);
     })
+    const usersForMessaging = await db.getItemByParams({ notificationToken: { $ne: null } }, userыModel)
+    usersForMessaging.forEach((user) => {
+      firebase.sendMessage('Новое расписание', "Пришло обновление расписания", user.notificationToken)
+    })
 
     //const result = await db.createItem(req, model)
     res.status(201).json({ errors: null, result: 'ok' })
