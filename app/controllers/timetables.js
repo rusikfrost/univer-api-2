@@ -4,6 +4,7 @@ const groupsModel = require('../models/group')
 const { matchedData } = require('express-validator')
 const utils = require('../middleware/utils')
 const db = require('../middleware/db')
+const firebase = require('../middleware/firebase')
 const dbfstream = require('dbfstreammemo')
 /*********************
  * Private functions *
