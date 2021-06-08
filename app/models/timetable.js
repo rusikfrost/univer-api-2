@@ -4,27 +4,27 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 const TimetableSchema = new mongoose.Schema({
     LOAD_ID: {
         type: String,
-        required: true,
+        required: false,
     },
     GROUP: {
         type: String,
-        required: true,
+        required: false,
     },
     DAY: {
         type: String,
-        required: true
+        required: false
     },
     LES: {
         type: String,
-        required: true
+        required: false
     },
     AUD: {
         type: String,
-        required: true
+        required: false
     },
     WEEK: {
         type: String,
-        required: true
+        required: false
     },
     SUBG: {
         type: String,
@@ -36,23 +36,23 @@ const TimetableSchema = new mongoose.Schema({
     },
     NAME: {
         type: String,
-        required: true
+        required: false
     },
     SUBJECT: {
         type: String,
-        required: true
+        required: false
     },
     SUBJ_TYPE: {
         type: String,
-        required: true
+        required: false
     },
     DATE: {
         type: String,
-        required: true
+        required: false
     },
     CAFEDRA: {
         type: String,
-        required: true
+        required: false
     },
     THEME: {
         type: String,
@@ -83,26 +83,26 @@ module.exports = mongoose.model('Timetable', TimetableSchema)
 /* 
 couple: {
   type: Number,
-  required: true
+  required: false
 },
 lesson: {
   type: String,
-  required: true
+  required: false
 },
 type: {
   type: String,
-  required: true
+  required: false
 },
 lecturer: {
   type: String,
-  required: true
+  required: false
 },
 room: {
   type: Number,
-  required: true
+  required: false
 },
 date: {
   type: Number,
-  required: true
+  required: false
 } 
 */
