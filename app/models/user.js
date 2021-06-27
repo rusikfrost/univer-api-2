@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const validator = require('validator')
+//const validator = require('validator')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UserSchema = new mongoose.Schema(
@@ -11,11 +11,11 @@ const UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      validate: {
-/*         validator: validator.isEmail,
-        message: 'EMAIL_IS_NOT_VALID' */
+/*       validate: {
+        validator: validator.isEmail,
+        message: 'EMAIL_IS_NOT_VALID'
       },
-      lowercase: true,
+      lowercase: true, */
       unique: true,
       required: true
     },
