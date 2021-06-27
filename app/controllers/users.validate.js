@@ -17,9 +17,7 @@ exports.createItem = [
     .withMessage('MISSING')
     .not()
     .isEmpty()
-    .withMessage('IS_EMPTY')
-    .isEmail()
-    .withMessage('EMAIL_IS_NOT_VALID'),
+    .withMessage('IS_EMPTY'),
   check('password')
     .exists()
     .withMessage('MISSING')
