@@ -192,7 +192,6 @@ exports.createItemFromDBF = async (req, res) => {
     db.clearCollection(model)
     console.log(req.files);
     const dbf = dbfstream(`./${req.files[0].path}`, 'cp866')
-    let a = []
     dbf.on('header', (header) => {}).on('data', (data) => {})
     dbf.on('data', (data) => {
 
@@ -209,7 +208,7 @@ exports.createItemFromDBF = async (req, res) => {
     const usersForMessaging = await db.getItemByParams({ notificationToken: { $ne: null } }, usersModel)
     console.log(`usersForMessaging: ${usersForMessaging}`);
     usersForMessaging.forEach((user) => {
-      firebase.sendMessage('Новое расписание', "Пришло обновление расписания", user.notificationToken)
+      firebase.sendMessage(req.body.title === undefined ? 'Новое расписание' : req.body.title, req.body.description === undefined ? "Пришло обновление расписания": req.body.description, user.notificationToken)
     })
 
     //const result = await db.createItem(req, model)
